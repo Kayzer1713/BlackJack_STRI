@@ -1,30 +1,30 @@
 
 public class Carte {
 	
-	int value;		//1 à 13, as to king
-	int suit;		//1=trefle, 2=carreau, 3=coeur, 4=pique
+	int valeur;		//1 à 13, as to king
+	int couleur;		//1=trefle, 2=carreau, 3=coeur, 4=pique
 	
 	
 	//constructeur
-	public Carte(int value, int suit) {
+	public Carte(int valeur, int couleur) {
 		super();
-		this.value = value;
-		this.suit = suit;
+		this.valeur = valeur;
+		this.couleur = couleur;
 	}
 
-	public int getvalue() {
-		return value;
+	public int getValue() {
+		return valeur;
 	}
 
-	public void setvalue(int value) {
-		this.value = value;
+	public void setValue(int valeur) {
+		this.valeur = valeur;
 	}
 
-	public int getsuit() {
-		return suit;
+	public int getCouleur() {
+		return couleur;
 	}
 
-	public void setsuit(int suit) {
-		this.suit = suit;
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
 	}
 }

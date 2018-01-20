@@ -1,19 +1,13 @@
 package Serveur;
-/*
- * EchoServer.java
- *
- * Created on 12 septembre 2000, 11:07
- */
- 
 import java.net.*;
 import java.io.*;
 
 /** 
- * @author  Patrice Torguet
+ * @author  Vidal Ghislain
  */
 public class Server extends Object {
 
-  /** Port par d�faut */
+  /** Port par défaut */
   public final static int portEcho = 7;
     
   /**
