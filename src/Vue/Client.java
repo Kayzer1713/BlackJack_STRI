@@ -1,4 +1,4 @@
-package Client;
+package Vue;
 /*
  * EchoClient.java
  *

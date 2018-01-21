@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/Client/Client.java=UTF-8
-encoding//src/Serveur/Server.java=UTF-8
+encoding//src/Controller/Server.java=UTF-8
+encoding//src/Vue/Client.java=UTF-8

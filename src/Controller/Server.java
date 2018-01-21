@@ -1,4 +1,4 @@
-package Serveur;
+package Controller;
 import java.net.*;
 import java.io.*;
 
