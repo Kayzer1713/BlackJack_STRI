@@ -3,8 +3,15 @@ package Model;
 import java.util.ArrayList;
 
 public class Joueur {
-
+	
+	/**
+	 * Liste des cartes en main du joueur
+	 */
 	public ArrayList<Carte> main = null;
+	
+	/**
+	 * Booléen signifiant 
+	 */
 	public Boolean horsJeu;
 	public String nom;
 
