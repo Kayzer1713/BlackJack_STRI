@@ -10,7 +10,11 @@ public class Joueur {
 	public ArrayList<Carte> main = null;
 	
 	/**
+<<<<<<< HEAD
 	 * Booléen signifiant si le joueur est éliminé ou non
+=======
+	 * Booléen permettant de savoir si le joueur est toujours en jeu
+>>>>>>> Ajout des commentaire javadoc v1
 	 */
 	public Boolean horsJeu;
 	

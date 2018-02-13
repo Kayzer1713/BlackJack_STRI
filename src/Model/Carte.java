@@ -12,10 +12,14 @@ public class Carte {
 	 * @see Couleur
 	 */
 	Couleur couleur;
-	
-	int valeur;
+
 	/**
-	 * Constructor
+	 * La valeur correspondant à la carte
+	 */
+	int valeur;
+	
+	/**
+	 * Constructeur Carte
 	 * @param numero
 	 * @param couleur
 	 */
