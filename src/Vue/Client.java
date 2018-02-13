@@ -32,7 +32,7 @@ public class Client extends Object {
       
       leSocket = new Socket("localhost", 7); // socket sur echo
       
-      System.err.println("Connect� sur : "+leSocket);
+      System.err.println("Connecté sur : "+leSocket);
       
       fluxSortieSocket = new PrintStream(leSocket.getOutputStream());
       fluxEntreeSocket = new BufferedReader(new InputStreamReader(leSocket.getInputStream()));
@@ -42,6 +42,9 @@ public class Client extends Object {
       String retour = fluxEntreeSocket.readLine();
       
       System.out.println("Reponse du serveur : "+retour);
+      
+      
+      
       
       leSocket.close();
     }

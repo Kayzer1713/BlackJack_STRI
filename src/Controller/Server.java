@@ -54,6 +54,8 @@ public class Server extends Object {
           int b = 0;
           while (b != -1) {
             b = entreeSocket.read();
+            System.out.println("test");
+            System.out.println();
             sortieSocket.write(b);
           }
           System.err.println("Fin de connexion");
