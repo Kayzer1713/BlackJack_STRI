@@ -60,4 +60,7 @@ public class Client extends Object {
     }    
   }
 
+  public String afficheTable() {
+	  return "not implemented yet";
+  }
 }

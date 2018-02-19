@@ -1,6 +1,7 @@
 package Model;
 
 enum Numero {
+	As,
 	Deux,
 	Trois,
 	Quatre,
@@ -12,7 +13,5 @@ enum Numero {
 	Dix,
 	Valet,
 	Dame,
-	Roi,
-	As;
-
+	Roi
 }

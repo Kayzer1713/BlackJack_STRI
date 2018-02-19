@@ -1,9 +1,10 @@
+import Model.Deck;
 
 public class test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println(1+584/64+96*25);
-	}
+		Deck deck = new Deck();
+		System.out.println("Taille du deck: " + deck.getTaille());
 
+	}
 }
