@@ -2,11 +2,14 @@ package Vue;
 import java.io.*;
 import java.net.*;
 public class Client{
+	
 	Socket requestSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
 	String message;
+	
 	Client(){}
+	
 	void run()
 	{
 		try{
