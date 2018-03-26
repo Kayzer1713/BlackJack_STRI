@@ -3,14 +3,14 @@ package Vue;
 import java.io.*;
 import java.net.*;
 
-public class Client{
+public class Client5{
 
 	Socket requestSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
 	String message;
 
-	Client(){}
+	Client5(){}
 
 	void run()
 	{
@@ -38,11 +38,7 @@ public class Client{
 					// potentiellement sortir le new
 					case "new":
 						System.out.println("reçu>nouv joueur");
-						envoiMessage("Jacque");
-						long timeout = 5000;
-						long tempsActuel = System.currentTimeMillis();
-						do {
-						} while( ( System.currentTimeMillis()-tempsActuel < timeout ));
+						envoiMessage("CHIBRE");
 						envoiMessage("STOP");
 						break;
 					case "majTable":
@@ -107,7 +103,7 @@ public class Client{
 
 	public static void main(String args[])
 	{
-		Client client = new Client();
+		Client5 client = new Client5();
 		client.run();
 	}
 }

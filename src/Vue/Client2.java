@@ -22,7 +22,7 @@ public class Client2{
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
-
+			
 			try {
 				message = (String)in.readObject();
 				System.out.println("Reçu>" + message);
@@ -39,6 +39,7 @@ public class Client2{
 					case "new":
 						System.out.println("reçu>nouv joueur");
 						envoiMessage("Paul");
+						envoiMessage("STOP");
 						break;
 					case "majTable":
 						System.out.println("Reçu>maj Table");
@@ -51,10 +52,8 @@ public class Client2{
 						System.out.println("Reçu>nouv partie");
 						break;
 					default :
-						System.out.println("Reçu>Fin de la connexion");                    	
+						System.out.println("Reçu>"+message);                    	
 					}
-
-					envoiMessage("STOP");
 				}
 				catch(ClassNotFoundException classNot){
 					System.err.println("Format de données inconnue!");

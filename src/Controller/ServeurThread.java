@@ -9,7 +9,6 @@ public class ServeurThread extends Thread{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message;
-	long threadId;
 
 	ServeurThread( Socket socketClient){
 		
@@ -17,14 +16,13 @@ public class ServeurThread extends Thread{
 		this.out = null;
 		this.in = null;
 		this.message = null;
-		this.threadId = Thread.currentThread().getId();
 	}
 	
 	public void run()
 	{
 		
 		try {
-
+			long threadId = Thread.currentThread().getId();
 			// Attente de la connexion
 			System.out.println("Connection received from " + connection.getInetAddress());
 
@@ -47,15 +45,13 @@ public class ServeurThread extends Thread{
 				switch(message) {
 				// potentiellement sortir le new
 				case "Jacque":
-					System.out.println(threadId + "Reçus>" + message);
 					//envoiMessage("Bonjour " + message + " je suis votre serveur");
 					break;
 				case "Paul":
-					System.out.println(threadId + ": Reçus>" + message);
 					//envoiMessage("Bonjour " + message + " je suis votre serveur");
 					break;
 				default :
-					System.out.println(threadId + ": Reçus>Fin de la connexion");
+					System.out.println(threadId + ": Fin de la connexion");
 					break;
 				}
 				if (message.equals("STOP"))
@@ -97,7 +93,7 @@ public class ServeurThread extends Thread{
 		try{
 			out.writeObject(msg);
 			out.flush();
-			System.out.println(this.threadId + ": Envoi>" + msg);
+			System.out.println("Envoi>" + msg);
 		}
 		catch(IOException ioException){
 			ioException.printStackTrace();

@@ -55,7 +55,7 @@ public class Serveur {
 		return listeJoueurs.size()-1; // on retourne le numéro du client ajouté (size-1)
 	}
 	
-	/**
+	
 	
 	//** Methode : envoie le message à tous les clients **
 	synchronized public void sendAll(String message,String sLast)
@@ -63,7 +63,7 @@ public class Serveur {
 		PrintWriter out; // declaration d'une variable permettant l'envoi de texte vers le client
 		for (int i = 0; i < listeJoueurs.size(); i++) // parcours de la table des connectés
 		{
-			out = (PrintWriter) listeJoueurs.elementAt(i); // extraction de l'élément courant (type PrintWriter)
+			out = listeJoueurs.get(key).getOutJoueur(); // extraction de l'élément courant (type PrintWriter)
 			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
