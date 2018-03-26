@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import Model.Joueur;
 
@@ -31,16 +33,16 @@ public class Serveur {
 		return listeJoueurs.size()-1; // on retourne le numéro du client ajouté (size-1)
 	}
 
-	/**
-
 	//** Methode : envoie le message à tous les clients **
 	synchronized public void sendAll(String message,String sLast)
 	{
 		PrintWriter out; // declaration d'une variable permettant l'envoi de texte vers le client
-		for (int i = 0; i < listeJoueurs.size(); i++) // parcours de la table des connectés
-		{
-			out = (PrintWriter) listeJoueurs.elementAt(i); // extraction de l'élément courant (type PrintWriter)
-			if (out != null) // sécurité, l'élément ne doit pas être vide
+		Set<String> cles = listeJoueurs.keySet();
+		Iterator<String> it = cles.iterator();
+		while (it.hasNext()){
+			/**Object cle = it.next();
+			Object valeur = listeJoueurs.get(cle);**/
+			out = listeJoueurs.get(it).getOutJoueur(); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
 				out.print(message+sLast);
@@ -49,7 +51,6 @@ public class Serveur {
 		}
 	}
 
-	 **/
 	@SuppressWarnings("resource")
 	public static void main(String args[])
 	{
