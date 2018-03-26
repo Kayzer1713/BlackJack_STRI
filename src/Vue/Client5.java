@@ -38,7 +38,7 @@ public class Client5{
 					// potentiellement sortir le new
 					case "new":
 						System.out.println("reçu>nouv joueur");
-						envoiMessage("CHIBRE");
+						envoiMessage("TITOUANT");
 						envoiMessage("STOP");
 						break;
 					case "majTable":

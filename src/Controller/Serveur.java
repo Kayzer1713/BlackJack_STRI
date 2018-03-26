@@ -55,7 +55,7 @@ public class Serveur {
 		return listeJoueurs.size()-1; // on retourne le numéro du client ajouté (size-1)
 	}
 	
-	
+	/**
 	
 	//** Methode : envoie le message à tous les clients **
 	synchronized public void sendAll(String message,String sLast)
