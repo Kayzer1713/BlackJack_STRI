@@ -5,22 +5,23 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 public class ServeurThread extends Thread{
 
+	private Serveur serveur;
 	private Socket connection;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message;
 
-	ServeurThread( Socket socketClient){
-		
+	ServeurThread(Serveur serveur, Socket socketClient){
+		this.serveur = serveur;
 		this.connection = socketClient;
 		this.out = null;
 		this.in = null;
 		this.message = null;
 	}
-	
+
 	public void run()
 	{
-		
+
 		try {
 			long threadId = Thread.currentThread().getId();
 			// Attente de la connexion
@@ -39,16 +40,34 @@ public class ServeurThread extends Thread{
 			// Boucle principale de communication
 			do{
 				message = attenteMessage();
-				
+
 				System.out.println(threadId + ": Reçus>" + message);
-				
+
 				switch(message) {
 				// potentiellement sortir le new
 				case "Jacque":
+					System.out.println("AJOUT DE JACQUE");
+					System.out.println(message);
+					System.out.println(out.toString());
+					serveur.ajoutClient(out, message);
 					
 					break;
 				case "Paul":
-					//envoiMessage("Bonjour " + message + " je suis votre serveur");
+					System.out.println("AJOUT DE PAUL");
+					serveur.ajoutClient(out, message);
+					
+					break;
+				case "Pierre":
+					serveur.ajoutClient(out, message);
+					System.out.println("AJOUT DE PIERRE");
+					break;
+				case "BIBI":
+					serveur.ajoutClient(out, message);
+					System.out.println("AJOUT DE BIBI");
+					break;
+				case "TITOUANT":
+					serveur.ajoutClient(out, message);
+					System.out.println("AJOUT DE TITOUANT");
 					break;
 				default :
 					System.out.println(threadId + ": Fin de la connexion");
@@ -99,7 +118,7 @@ public class ServeurThread extends Thread{
 			ioException.printStackTrace();
 		}
 	}
-	
+
 	private String attenteMessage() throws Exception {
 		System.out.println("Attente de réponse du client...");
 		String reçu;

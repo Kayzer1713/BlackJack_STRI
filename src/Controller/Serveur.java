@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,7 +27,7 @@ public class Serveur {
 	}
 
 	//** Methode : ajoute un nouveau client dans la liste **
-	synchronized public int ajoutClient(PrintWriter out, String pseudo)
+	synchronized public int ajoutClient(ObjectOutputStream out, String pseudo)
 	{
 		nbClients++; // un client en plus ! ouaaaih
 		listeJoueurs.put(pseudo, new Joueur(pseudo, out)); // on ajoute le nouveau flux de sortie au tableau
@@ -36,17 +37,20 @@ public class Serveur {
 	//** Methode : envoie le message à tous les clients **
 	synchronized public void sendAll(String message,String sLast)
 	{
-		PrintWriter out; // declaration d'une variable permettant l'envoi de texte vers le client
+		ObjectOutputStream out; // declaration d'une variable permettant l'envoi de texte vers le client
 		Set<String> cles = listeJoueurs.keySet();
 		Iterator<String> it = cles.iterator();
 		while (it.hasNext()){
 			/**Object cle = it.next();
-			Object valeur = listeJoueurs.get(cle);**/
+				Object valeur = listeJoueurs.get(cle);**/
 			out = listeJoueurs.get(it).getOutJoueur(); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
-				out.print(message+sLast);
-				out.flush(); // envoi dans le flux de sortie
+				try {
+					out.writeObject(message+sLast);
+					out.flush(); // envoi dans le flux de sortie
+				} catch (IOException e) {e.printStackTrace();}
+
 			}
 		}
 	}
@@ -72,7 +76,7 @@ public class Serveur {
 				System.out.println("I/O error: " + e);
 			}
 			// nouveau thread pour le prochain client
-			new ServeurThread(connection).start();
+			new ServeurThread(serveur, connection).start();
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package Model;
 
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Joueur {
@@ -25,10 +25,10 @@ public class Joueur {
 	 * @param nom du joueur
 	 */
 
-	private PrintWriter out;
+	private ObjectOutputStream out;
 
-	public Joueur(String n, PrintWriter out) {
-		this.nom = n;
+	public Joueur(String pseudo, ObjectOutputStream out2) {
+		this.nom = pseudo;
 		this.setOutJoueur(out);
 	}
 
@@ -47,11 +47,11 @@ public class Joueur {
 		this.nom = nom;
 	}
 
-	public PrintWriter getOutJoueur() {
+	public ObjectOutputStream getOutJoueur() {
 		return out;
 	}
 
-	public void setOutJoueur(PrintWriter out) {
+	public void setOutJoueur(ObjectOutputStream out) {
 		this.out = out;	
 	}
 

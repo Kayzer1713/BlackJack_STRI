@@ -39,10 +39,6 @@ public class Client{
 					case "new":
 						System.out.println("reçu>nouv joueur");
 						envoiMessage("Jacque");
-						long timeout = 5000;
-						long tempsActuel = System.currentTimeMillis();
-						do {
-						} while( ( System.currentTimeMillis()-tempsActuel < timeout ));
 						envoiMessage("STOP");
 						break;
 					case "majTable":
