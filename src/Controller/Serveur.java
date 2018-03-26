@@ -1,107 +1,77 @@
 package Controller;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-public class Serveur{
-	ServerSocket serveurSocket;
-	Socket connection = null;
-	ObjectOutputStream out;
-	ObjectInputStream in;
-	String message;
-	Serveur(){}
-	void run()
+import java.util.HashMap;
+
+import Model.Joueur;
+
+public class Serveur {
+
+	private HashMap<String, Joueur> listeJoueurs;
+	private int nbClients = 0; // nombre total de clients connectés
+
+	@SuppressWarnings("resource")
+	public static void main(String args[])
 	{
-		// Création du socket
+		ServerSocket serveurSocket = null;
+		Socket connection = null;
+
 		try {
 			serveurSocket = new ServerSocket(9999);
-
-			// Attente de la connexion
-			System.out.println("Attente de connexion...");
-			connection = serveurSocket.accept();
-			System.out.println("Connection received from " + connection.getInetAddress());
-
-			//Initialisation du flux de données
-			out = new ObjectOutputStream(connection.getOutputStream());
-			out.flush();
-			in = new ObjectInputStream(connection.getInputStream());
-			envoiMessage("Connexion réussi");
-
-			// Init nouv joueur
-			envoiMessage("new");
-			envoiMessage("Bonjour voulez vous jouer au BlackJack ?");
-
-			// Boucle principale de communication
-			do{
-				message = attenteMessage();
-				System.out.println("Reçu>" + message);
-				if (message.equals("STOP"))
-					envoiMessage("STOP");
-
-			}while(!message.equals("STOP"));
-
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// exception de timeout et autre
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+
 		}
-		finally{
-			// Fermeture de la connexion
+		while (true) { // boucle d'attente de connexion des clients 
 			try {
-				in.close();
-				out.close();
-				serveurSocket.close();
+				System.out.println("attente de nouvelle connection...");
+				connection = serveurSocket.accept();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("I/O error: " + e);
+			}
+			// nouveau thread pour le prochain client
+			new ServeurThread(connection).start();
+		}
+	}
+
+	//** Methode : détruit le client 
+	synchronized public void suprClient(String pseudo)
+	{
+		if (listeJoueurs.containsKey(pseudo)) // l'élément existe ...
+		{
+			listeJoueurs.remove(pseudo); // ... on le supprime
+			nbClients--; // un client en moins ! snif
+		}
+	}
+
+	//** Methode : ajoute un nouveau client dans la liste **
+	synchronized public int ajoutClient(PrintWriter out, String pseudo)
+	{
+		nbClients++; // un client en plus ! ouaaaih
+		listeJoueurs.put(pseudo, new Joueur(pseudo, out)); // on ajoute le nouveau flux de sortie au tableau
+		return listeJoueurs.size()-1; // on retourne le numéro du client ajouté (size-1)
+	}
+	
+	/**
+	
+	//** Methode : envoie le message à tous les clients **
+	synchronized public void sendAll(String message,String sLast)
+	{
+		PrintWriter out; // declaration d'une variable permettant l'envoi de texte vers le client
+		for (int i = 0; i < listeJoueurs.size(); i++) // parcours de la table des connectés
+		{
+			out = (PrintWriter) listeJoueurs.elementAt(i); // extraction de l'élément courant (type PrintWriter)
+			if (out != null) // sécurité, l'élément ne doit pas être vide
+			{
+				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
+				out.print(message+sLast);
+				out.flush(); // envoi dans le flux de sortie
 			}
 		}
 	}
-
-
-	/**
-	 * 
-	 * @param msg
-	 */
-	private void envoiMessage(String msg)
-	{
-		try{
-			out.writeObject(msg);
-			out.flush();
-			System.out.println("Envoi>" + msg);
-		}
-		catch(IOException ioException){
-			ioException.printStackTrace();
-		}
-	}
 	
-	private String attenteMessage() throws Exception {
-		System.out.println("Attente de réponse du client...");
-		String reçu;
-		long timeout = 5000;
-		long tempsActuel = System.currentTimeMillis();
-		do {
-			reçu = (String)in.readObject();
-		} while( ( System.currentTimeMillis()-tempsActuel < timeout ) && reçu.equals("") );
-		if ( reçu == null )
-			throw new Exception("Timeout: le message n'as pas était reçus à temps ou le client ne répond plus...");
-		return reçu;
-	}
-	
-
-	public static void main(String args[])
-	{
-		Serveur server = new Serveur();
-		while(true){
-			server.run();
-		}
-	}
+	**/
 }

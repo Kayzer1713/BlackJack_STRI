@@ -1,6 +1,6 @@
 package Model;
 
-import java.net.Socket;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Joueur {
@@ -25,11 +25,11 @@ public class Joueur {
 	 * @param nom du joueur
 	 */
 
-	private Socket socketJoueur;
+	private PrintWriter out;
 
-	public Joueur(String n, Socket s) {
+	public Joueur(String n, PrintWriter out) {
 		this.nom = n;
-		this.setSocketJoueur(s);
+		this.setOutJoueur(out);
 	}
 
 	/**
@@ -47,12 +47,12 @@ public class Joueur {
 		this.nom = nom;
 	}
 
-	public Socket getSocketJoueur() {
-		return socketJoueur;
+	public PrintWriter getOutJoueur() {
+		return out;
 	}
 
-	public void setSocketJoueur(Socket socketJoueur) {
-		this.socketJoueur = socketJoueur;
+	public void setOutJoueur(PrintWriter out) {
+		this.out = out;	
 	}
 
 

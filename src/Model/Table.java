@@ -8,7 +8,7 @@ public class Table {
 	/**
 	 * Map contenant la liste des joueurs de la table
 	 */
-	private HashMap<String, Joueur> listeJoueurs;
+	private HashMap<String, Joueur> listeJoueursTable;
 	
 	/**
 	 * Paquet utilisé sur la table en question
@@ -30,7 +30,7 @@ public class Table {
 	 * @see Socket
 	 */
 	public void ajoutJoueur(String pseudo, Joueur j) {
-		this.listeJoueurs.put(pseudo, j);
+		this.listeJoueursTable.put(pseudo, j);
 	}
 
 	/**
@@ -38,11 +38,11 @@ public class Table {
 	 * @param j joueur à retirer
 	 */
 	public void retireJoueur(String pseudo) {
-		this.listeJoueurs.remove(pseudo);
+		this.listeJoueursTable.remove(pseudo);
 	}
 	
 	public int nbJoueur() {
-		return this.listeJoueurs.size()-1;
+		return this.listeJoueursTable.size()-1;
 	}
 	
 }
