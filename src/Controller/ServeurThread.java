@@ -45,7 +45,7 @@ public class ServeurThread extends Thread{
 				switch(message) {
 				// potentiellement sortir le new
 				case "Jacque":
-					//envoiMessage("Bonjour " + message + " je suis votre serveur");
+					
 					break;
 				case "Paul":
 					//envoiMessage("Bonjour " + message + " je suis votre serveur");
