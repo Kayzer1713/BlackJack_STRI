@@ -63,7 +63,7 @@ public class Serveur {
 		PrintWriter out; // declaration d'une variable permettant l'envoi de texte vers le client
 		for (int i = 0; i < listeJoueurs.size(); i++) // parcours de la table des connectés
 		{
-			out = listeJoueurs.get(key).getOutJoueur(); // extraction de l'élément courant (type PrintWriter)
+			out = (PrintWriter) listeJoueurs.elementAt(i); // extraction de l'élément courant (type PrintWriter)
 			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
