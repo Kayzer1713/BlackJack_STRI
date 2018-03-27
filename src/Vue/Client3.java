@@ -2,9 +2,19 @@ package Vue;
 
 import java.io.*;
 import java.net.*;
-
+/**
+ * 
+ * Vue Client 3
+ *
+ */
 public class Client3{
-
+	/**
+	 * Composition du client 3:
+	 * Socket requestSocket;
+	 * ObjectOutputStream out;
+	 * ObjectInputStream in;
+	 * String message;
+	 */
 	Socket requestSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
@@ -14,11 +24,16 @@ public class Client3{
 
 	void run()
 	{
+		/**
+		 * Connection du client au serveur
+		 */
 		try{
 			requestSocket = new Socket("localhost", 9999);
 			System.out.println("Connected to localhost in port 9999");
 
-			// Ouverture des connections
+			/**
+			 * Ouverture des connections
+			 */
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
@@ -30,7 +45,9 @@ public class Client3{
 				e.printStackTrace();
 			}
 
-			// Boucle principale de communication
+			/**
+			 * Boucle principale de communication
+			 */
 			do{
 				try{
 					message = (String)in.readObject();
@@ -68,7 +85,9 @@ public class Client3{
 			ioException.printStackTrace();
 		}
 		finally{
-			// Fermeture de la connexion
+			/**
+			 * Fermeture de la connexion
+			 */
 			try{
 				in.close();
 				out.close();
@@ -81,7 +100,7 @@ public class Client3{
 	}
 
 	/**
-	 * 
+	 * Méthode qui permet d'envoyer un message
 	 * @param msg
 	 */
 	private void envoiMessage(String msg)
@@ -95,12 +114,15 @@ public class Client3{
 			ioException.printStackTrace();
 		}
 	}
-
+	/**
+	 * Retourne le statut mis à jour de la table
+	 * @return 
+	 */
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";
 	}
-
+	
 	public static void main(String args[])
 	{
 		Client3 client = new Client3();
