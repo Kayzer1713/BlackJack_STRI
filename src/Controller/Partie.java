@@ -36,7 +36,7 @@ public class Partie {
 	 */
 	public Partie() {
 		this.dealer = new Joueur("Dealer", null);
-		this.table = new Table(this.dealer);
+		this.table = new Table(this.dealer, 0, false, 0);
 
 	}
 }

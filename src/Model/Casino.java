@@ -44,7 +44,7 @@ public class Casino {
 	 * Instanciation de la liste de dealer via la liste de prénom.
 	 * Instanciation de la liste de table
 	 */
-	Casino(){	
+	public Casino(){	
 		for(int j=0; j<=10;j++) {
 			listDealer.add(new Joueur(nameDealer[j],null));
 		}

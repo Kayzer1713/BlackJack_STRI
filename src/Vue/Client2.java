@@ -98,7 +98,7 @@ public class Client2{
 	}
 
 	private String attenteMessage() {
-		System.out.println("Attente de réponse du client...");
+		System.out.println("Attente de réponse du serveur...");
 		String reçu = null;
 		long timeout = 5000;
 		long tempsActuel = System.currentTimeMillis();
@@ -121,13 +121,17 @@ public class Client2{
 		System.out.println("Bonjour veuillez saisir un pseudo :");
 		String str = sc.nextLine();
 		System.out.println("Vous avez saisi : " + str);
+		
 		envoiMessage(str);
 		message = attenteMessage();
+		
 		while ( message.equals("pseudoDejaExistant") ) {
 			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
 			str = sc.nextLine();
+			envoiMessage(str);
+			message = attenteMessage();
 		}
-		message = attenteMessage();
+		
 		if (message.equals("valide")) {
 			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
 			this.pseudo = str;

@@ -106,9 +106,8 @@ public class ServeurThread extends Thread{
 	}
 
 	private void choisirTable() {
-		envoiMessage("Bienvenue dans le casino !");
-		//bjr
 		envoiMessage("choixTable");
+		
 	}
 	
 	/**

@@ -35,29 +35,27 @@ public class Client{
 
 			// Boucle principale de communication
 			do{
-				try{
-					message = (String)in.readObject();
-					switch(message) {
-					case "new":
-						premiereConnection();
-						envoiMessage("STOP");
-						break;
-					case "majTable":
-						System.out.println("Reçu>maj Table");
-						afficheTable();
-						break;
-					case "hit":
-						System.out.println("Reçu>tire carte");
-						break;
-					case "again":
-						System.out.println("Reçu>nouv partie");
-						break;
-					default :
-						System.out.println("Reçu>"+message);                    	
-					}
-				}
-				catch(ClassNotFoundException classNot){
-					System.err.println("Format de données inconnue!");
+				switch(message) {
+				case "new":
+					System.out.println("Bienvenue dans le casino !");
+					premiereConnection();
+					envoiMessage("STOP");
+					break;
+				case "majTable":
+					System.out.println("Reçu>maj Table");
+					afficheTable();
+					break;
+				case "hit":
+					System.out.println("Reçu>tire carte");
+					break;
+				case "again":
+					System.out.println("Reçu>nouv partie");
+					break;
+				case "choixTable":
+					choisirTable();
+					break;
+				default :
+					System.out.println("Reçu>"+message);                    	
 				}
 			}while(!message.equals("STOP"));
 			System.out.println(message + ": OK");
@@ -98,7 +96,7 @@ public class Client{
 	}
 
 	private String attenteMessage() {
-		System.out.println("Attente de réponse du client...");
+		System.out.println("Attente de réponse du serveur...");
 		String reçu = null;
 		long timeout = 5000;
 		long tempsActuel = System.currentTimeMillis();
@@ -123,13 +121,14 @@ public class Client{
 		System.out.println("Vous avez saisi : " + str);
 		envoiMessage(str);
 		message = attenteMessage();
+		
 		while ( message.equals("pseudoDejaExistant") ) {
 			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
-			message = attenteMessage();
 			str = sc.nextLine();
 			envoiMessage(str);
+			message = attenteMessage();
 		}
-		message = attenteMessage();
+		
 		if (message.equals("valide")) {
 			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
 			this.pseudo = str;
@@ -139,6 +138,11 @@ public class Client{
 		sc.close();
 	}
 
+	private void choisirTable() {
+		System.out.println("Veuillez choisir une table du casino");
+		// to do
+	}
+	
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";
