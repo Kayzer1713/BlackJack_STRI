@@ -16,10 +16,25 @@ public class Client3{
 	 * String message;
 	 */
 	Socket requestSocket;
+	
+	/**
+	 * 
+	 */
 	ObjectOutputStream out;
+	
+	/**
+	 * 
+	 */
 	ObjectInputStream in;
+	
+	/**
+	 * 
+	 */
 	String message;
-
+	
+	/**
+	 * 
+	 */
 	Client3(){}
 
 	void run()

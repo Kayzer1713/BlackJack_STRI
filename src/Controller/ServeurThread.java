@@ -47,8 +47,6 @@ public class ServeurThread extends Thread{
 				// potentiellement sortir le new
 				case "Jacque":
 					System.out.println("AJOUT DE JACQUE");
-					System.out.println(message);
-					System.out.println(out.toString());
 					serveur.ajoutClient(out, message);
 					
 					break;

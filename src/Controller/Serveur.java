@@ -13,22 +13,27 @@ import Model.Joueur;
 public class Serveur {
 
 	private HashMap<String, Joueur> listeJoueurs;
-	private int nbClients = 0; // nombre total de clients connectés
-
+	private int nbClients;// nombre total de clients connectés
+	
+	public Serveur() {
+		this.setNbClients(0);
+		this.listeJoueurs = new HashMap<String, Joueur>();
+	}
+	
 	//** Methode : détruit le client 
 	synchronized public void suprClient(String pseudo)
 	{
 		if (listeJoueurs.containsKey(pseudo)) // l'élément existe ...
 		{
 			listeJoueurs.remove(pseudo); // ... on le supprime
-			nbClients--; // un client en moins ! snif
+			setNbClients(getNbClients() - 1); // un client en moins ! snif
 		}
 	}
 
 	//** Methode : ajoute un nouveau client dans la liste **
 	synchronized public int ajoutClient(ObjectOutputStream out, String pseudo)
 	{
-		nbClients++; // un client en plus ! ouaaaih
+		setNbClients(getNbClients() + 1); // un client en plus ! ouaaaih
 		listeJoueurs.put(pseudo, new Joueur(pseudo, out)); // on ajoute le nouveau flux de sortie au tableau
 		return listeJoueurs.size()-1; // on retourne le numéro du client ajouté (size-1)
 	}
@@ -54,6 +59,14 @@ public class Serveur {
 		}
 	}
 
+	public int getNbClients() {
+		return nbClients;
+	}
+
+	public void setNbClients(int nbClients) {
+		this.nbClients = nbClients;
+	}
+
 	@SuppressWarnings("resource")
 	public static void main(String args[])
 	{
@@ -76,6 +89,7 @@ public class Serveur {
 			}
 			// nouveau thread pour le prochain client
 			new ServeurThread(serveur, connection).start();
+			System.out.println(serveur.getNbClients());
 		}
 	}
 }
