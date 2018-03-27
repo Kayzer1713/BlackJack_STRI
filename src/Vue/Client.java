@@ -42,7 +42,7 @@ public class Client{
 						envoiMessage("STOP");
 						break;
 					case "majTable":
-						System.out.println("Reçu>maj Table");
+							System.out.println("Reçu>maj Table");
 						afficheTable();
 						break;
 					case "hit":
