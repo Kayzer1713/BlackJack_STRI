@@ -19,6 +19,11 @@ public class Joueur {
 	 * pseudo/nom du joueur
 	 */
 	private String nom;
+	
+	/**
+	 * Nombre de jetons du joueurs, 100 par défaut.
+	 */
+	private int jetons;
 
 	/**
 	 * Constructeur défault
@@ -30,6 +35,7 @@ public class Joueur {
 	public Joueur(String pseudo, ObjectOutputStream out2) {
 		this.nom = pseudo;
 		this.setOutJoueur(out);
+		this.jetons = 100;
 	}
 
 	/**
