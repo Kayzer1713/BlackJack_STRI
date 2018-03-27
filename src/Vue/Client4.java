@@ -2,16 +2,33 @@ package Vue;
 
 import java.io.*;
 import java.net.*;
-
+/**
+ * Vue Client n°1
+ * @category VueClient
+ */
 public class Client4{
-
+	/**
+	 * variable de requête socket
+	 */
 	Socket requestSocket;
+	/**
+	 * Variable de sortie du stream
+	 */
 	ObjectOutputStream out;
+	/**
+	 * Variable d'entrée du stream
+	 */
 	ObjectInputStream in;
+	/**
+	 * Variable de stockage de message
+	 */
 	String message;
 
 	Client4(){}
-
+	/**
+	 * Connection du client au serveur		
+	 * Ouverture des connections
+	 */
 	void run()
 	{
 		try{
@@ -35,7 +52,6 @@ public class Client4{
 				try{
 					message = (String)in.readObject();
 					switch(message) {
-					// potentiellement sortir le new
 					case "new":
 						System.out.println("reçu>nouv joueur");
 						envoiMessage("BIBI");
@@ -80,8 +96,9 @@ public class Client4{
 		}
 	}
 
+
 	/**
-	 * 
+	 * Méthode qui permet d'envoyer un message
 	 * @param msg
 	 */
 	private void envoiMessage(String msg)
@@ -95,7 +112,10 @@ public class Client4{
 			ioException.printStackTrace();
 		}
 	}
-
+	/**
+	 * Retourne le statut mis à jour de la table
+	 * @return 
+	 */
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";

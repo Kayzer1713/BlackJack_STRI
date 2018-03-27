@@ -3,52 +3,44 @@ package Vue;
 import java.io.*;
 import java.net.*;
 /**
- * 
- * Vue Client 3
- *
+ * Vue Client n°2
+ * @category VueClient
  */
 public class Client3{
 	/**
-	 * Composition du client 3:
-	 * Socket requestSocket;
-	 * ObjectOutputStream out;
-	 * ObjectInputStream in;
-	 * String message;
+	 * variable de requête socket
 	 */
 	Socket requestSocket;
 	
 	/**
-	 * 
+	 * Variable de sortie du stream
 	 */
 	ObjectOutputStream out;
 	
 	/**
-	 * 
+	 * Variable d'entrée du stream
 	 */
 	ObjectInputStream in;
 	
 	/**
-	 * 
+	 * Variable de stockage de message
 	 */
 	String message;
 	
-	/**
-	 * 
-	 */
 	Client3(){}
 
+	/**
+	 * Connection du client au serveur		
+	 * Ouverture des connections
+	 */
 	void run()
 	{
-		/**
-		 * Connection du client au serveur
-		 */
+		
 		try{
 			requestSocket = new Socket("localhost", 9999);
 			System.out.println("Connected to localhost in port 9999");
 
-			/**
-			 * Ouverture des connections
-			 */
+			
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
@@ -59,15 +51,11 @@ public class Client3{
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
-			/**
-			 * Boucle principale de communication
-			 */
+			
 			do{
 				try{
 					message = (String)in.readObject();
 					switch(message) {
-					// potentiellement sortir le new
 					case "new":
 						System.out.println("reçu>nouv joueur");
 						envoiMessage("Pierre");
@@ -99,10 +87,11 @@ public class Client3{
 		} catch(IOException ioException){
 			ioException.printStackTrace();
 		}
+		/**
+		 * Fermeture de la connexion
+		 */
 		finally{
-			/**
-			 * Fermeture de la connexion
-			 */
+			
 			try{
 				in.close();
 				out.close();
