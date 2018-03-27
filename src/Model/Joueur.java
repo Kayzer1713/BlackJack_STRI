@@ -19,6 +19,11 @@ public class Joueur {
 	 * pseudo/nom du joueur
 	 */
 	private String nom;
+	
+	/**
+	 * Nombre de jetons du joueurs, 100 par défaut.
+	 */
+	private int jetons;
 
 	/**
 	 * Constructeur défault
@@ -30,6 +35,7 @@ public class Joueur {
 	public Joueur(String pseudo, ObjectOutputStream out2) {
 		this.nom = pseudo;
 		this.setOutJoueur(out);
+		this.jetons = 100;
 	}
 
 	/**
@@ -104,10 +110,24 @@ public class Joueur {
 	}
 
 	/**
-	 * @return un string décrivant la main du joueur
+	 * Affiche la main du joueur
 	 */
 	public void afficheMain() {
 		System.out.println(main);
+	}
+	
+	/**
+	 * Gain des jetons du joueur
+	 */
+	public void ajoutJetons(int mise){
+		this.jetons = this.jetons + mise;
+	}
+	
+	/**
+	 * Perte des jetons du joueur
+	 */
+	public void retireJetons(int mise){
+		this.jetons = this.jetons - mise;
 	}
 
 }
