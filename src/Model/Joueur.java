@@ -110,10 +110,24 @@ public class Joueur {
 	}
 
 	/**
-	 * @return un string décrivant la main du joueur
+	 * Affiche la main du joueur
 	 */
 	public void afficheMain() {
 		System.out.println(main);
+	}
+	
+	/**
+	 * Gain des jetons du joueur
+	 */
+	public void ajoutJetons(int mise){
+		this.jetons = this.jetons + mise;
+	}
+	
+	/**
+	 * Perte des jetons du joueur
+	 */
+	public void retireJetons(int mise){
+		this.jetons = this.jetons - mise;
 	}
 
 }
