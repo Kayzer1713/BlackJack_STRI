@@ -34,26 +34,21 @@ public class ServeurThread extends Thread{
 			envoiMessage("Connexion réussi");
 
 			// Init nouv joueur
-			envoiMessage("new");
-			envoiMessage("Bonjour voulez vous jouer au BlackJack ?");
-
-			// Boucle principale de communication
+			creationJoueur();
+			// Init partie
+			choisirTable();
+			
+			// Boucle principale de jeux
 			do{
 				message = attenteMessage();
-
 				System.out.println(threadId + ": Reçus>" + message);
 
 				switch(message) {
-				// potentiellement sortir le new
 				case "Jacque":
-					System.out.println("AJOUT DE JACQUE");
-					serveur.ajoutClient(out, message);
-					
 					break;
 				case "Paul":
 					System.out.println("AJOUT DE PAUL");
 					serveur.ajoutClient(out, message);
-					
 					break;
 				case "Pierre":
 					serveur.ajoutClient(out, message);
@@ -78,10 +73,8 @@ public class ServeurThread extends Thread{
 
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			// exception de timeout et autre
@@ -94,13 +87,30 @@ public class ServeurThread extends Thread{
 				in.close();
 				out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
+	private void creationJoueur() throws Exception {
+		envoiMessage("new");
+		message = attenteMessage();
+		while( serveur.getListeJoueurs().containsKey(message) || message.equals("q")) {
+			envoiMessage("pseudoDejaExistant");
+			message = attenteMessage();
+		}
+		if ( !message.equals("q") ) {
+			serveur.ajoutClient(out, message);
+			envoiMessage("valide");
+		}
+	}
 
+	private void choisirTable() {
+		envoiMessage("Bienvenue dans le casino !");
+		//bjr
+		envoiMessage("choixTable");
+	}
+	
 	/**
 	 * 
 	 * @param msg
@@ -119,6 +129,7 @@ public class ServeurThread extends Thread{
 
 	private String attenteMessage() throws Exception {
 		System.out.println("Attente de réponse du client...");
+		System.out.println();
 		String reçu;
 		long timeout = 5000;
 		long tempsActuel = System.currentTimeMillis();

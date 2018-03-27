@@ -13,11 +13,26 @@ import Model.Joueur;
 public class Serveur {
 
 	private HashMap<String, Joueur> listeJoueurs;
+
 	private int nbClients;// nombre total de clients connectés
 	
 	public Serveur() {
 		this.setNbClients(0);
 		this.listeJoueurs = new HashMap<String, Joueur>();
+	}
+	
+	/**
+	 * @return the listeJoueurs
+	 */
+	public HashMap<String, Joueur> getListeJoueurs() {
+		return listeJoueurs;
+	}
+
+	/**
+	 * @param listeJoueurs the listeJoueurs to set
+	 */
+	public void setListeJoueurs(HashMap<String, Joueur> listeJoueurs) {
+		this.listeJoueurs = listeJoueurs;
 	}
 	
 	//** Methode : détruit le client 
