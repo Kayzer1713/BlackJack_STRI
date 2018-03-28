@@ -134,7 +134,7 @@ public class Casino {
 	}
 
 	//** Methode : envoie le message à tous les clients **
-	synchronized public void envoie(String message,String sLast)
+	synchronized public void envoieTous(String message,String sLast)
 	{
 		Set<String> cles = listeJoueurs.keySet();
 		Iterator<String> it = cles.iterator();
@@ -146,8 +146,9 @@ public class Casino {
 				try {
 					j.getOutJoueur().writeObject(message+sLast);
 					j.getOutJoueur().flush(); // envoi dans le flux de sortie
-				} catch (IOException e) {e.printStackTrace();}
-
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -158,6 +159,15 @@ public class Casino {
 
 	public void setNbClients(int nbClients) {
 		this.nbClients = nbClients;
+	}
+
+	public String afficheTables() {
+		String msg = "-------------------------------\n\t";
+		for ( int i = 0; i < listTable.size(); i++ ) {
+			msg += "\t" + i + ": " +listTable.get(i).toString() + "\n";
+		}
+		msg += "-------------------------------\n";
+		return msg;
 	}
 
 	@SuppressWarnings("resource")
