@@ -54,20 +54,18 @@ public class Serveur {
 	}
 
 	//** Methode : envoie le message à tous les clients **
-	synchronized public void sendAll(String message,String sLast)
+	synchronized public void envoie(String message,String sLast)
 	{
-		ObjectOutputStream out; // declaration d'une variable permettant l'envoi de texte vers le client
 		Set<String> cles = listeJoueurs.keySet();
 		Iterator<String> it = cles.iterator();
 		while (it.hasNext()){
-			/**Object cle = it.next();
-				Object valeur = listeJoueurs.get(cle);**/
-			out = listeJoueurs.get(it).getOutJoueur(); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
+			String cle = it.next();
+			Joueur j = listeJoueurs.get(cle); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
 				try {
-					out.writeObject(message+sLast);
-					out.flush(); // envoi dans le flux de sortie
+					j.getOutJoueur().writeObject(message+sLast);
+					j.getOutJoueur().flush(); // envoi dans le flux de sortie
 				} catch (IOException e) {e.printStackTrace();}
 
 			}
@@ -82,7 +80,6 @@ public class Serveur {
 		this.nbClients = nbClients;
 	}
 
-	@SuppressWarnings("resource")
 	public static void main(String args[])
 	{
 		Serveur serveur = new Serveur();

@@ -29,7 +29,9 @@ public class Joueur {
 	 * Nombre de jetons du joueurs, 100 par défaut.
 	 */
 	private int jetons;
-
+	
+	private Table t; 
+	
 	private ObjectOutputStream out;
 
 	public Joueur(String pseudo) {
@@ -60,6 +62,14 @@ public class Joueur {
 	public void setNom(String nom) 
 	{
 		this.nom = nom;
+	}
+
+	public Table getT() {
+		return t;
+	}
+
+	public void setT(Table t) {
+		this.t = t;
 	}
 
 	public ObjectOutputStream getOutJoueur() {
@@ -137,6 +147,10 @@ public class Joueur {
 	 */
 	public void retireJetons(int mise){
 		this.jetons = this.jetons - mise;
+	}
+
+	public boolean isDealer() {
+		return this.dealer;
 	}
 
 }

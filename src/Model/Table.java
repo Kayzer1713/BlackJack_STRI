@@ -2,6 +2,10 @@ package Model;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
+import Controller.Casino;
 
 public class Table extends Thread{
 
@@ -35,7 +39,7 @@ public class Table extends Thread{
 	 * Constructeur table
 	 * @param dealer
 	 */
-	public Table(Joueur dealer, int miseTable, boolean tablePermanente, int nbJoueurMax) {
+	public Table(Casino casino, Joueur dealer, int miseTable, boolean tablePermanente, int nbJoueurMax) {
 		this.listeJoueursTable = new HashMap<String, Joueur>();
 		ajoutJoueur(dealer.getNom(), dealer);
 		this.paquet = new Deck();
@@ -43,7 +47,6 @@ public class Table extends Thread{
 		this.miseTable = miseTable;
 		this.tablePermanente = tablePermanente;
 		this.nbJoueurMax = nbJoueurMax;
-
 	}
 
 	/**
@@ -70,7 +73,7 @@ public class Table extends Thread{
 	}
 
 	public void distribuer(Joueur j) {
-
+		j.ajoutCarte(this.paquet.prendreCarte());
 	}
 
 	/**
@@ -89,8 +92,39 @@ public class Table extends Thread{
 		if ( this.tablePermanente )
 			description += "Permanante: ";
 		else
-			description += "Temporaire: ";
-		description += "Nb Joueurs: " + (listeJoueursTable.size()-1) + "/" + nbJoueurMax;
+			description += "Temporaire | ";
+		description += "Mise minimum:" + miseTable + " | Nb Joueurs: " + (listeJoueursTable.size()-1) + "/" + nbJoueurMax;
 		return description;
 	}
+
+	public void run() {
+		// parcour de la liste des joueurs:
+		Joueur jCourant;
+		
+		Set<String> cles = listeJoueursTable.keySet();
+		Iterator<String> it = cles.iterator();
+		
+		// distribution premier tour
+		while (it.hasNext()){
+			String cle = it.next();
+			jCourant = listeJoueursTable.get(cle);
+			distribuer(jCourant);
+		}
+		
+		// distribution deuxième tour
+		while (it.hasNext()){
+			String cle = it.next();
+			jCourant = listeJoueursTable.get(cle);
+			if (jCourant.isDealer() == true)
+				distribuer(jCourant);
+			distribuer(jCourant);
+			
+		}
+		
+	}
 }
+
+
+
+
+

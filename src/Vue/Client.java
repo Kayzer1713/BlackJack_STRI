@@ -42,11 +42,9 @@ public class Client{
 					//envoiMessage("STOP");
 					break;
 				case "majTable":
-					System.out.println("Reçu>maj Table");
 					afficheTable();
 					break;
 				case "partie":
-					// a verifier avec ghis
 					deroulementPartie();
 					break;
 				case "again":
@@ -146,6 +144,7 @@ public class Client{
 		Scanner sc = new Scanner(System.in);
 		message = attenteMessage();
 		System.out.println("Veuillez choisir une table du Casino : ");
+		System.out.println(message);
 		String str = sc.nextLine();
 		envoiMessage(str);
 	}

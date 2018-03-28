@@ -5,14 +5,14 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 public class ServeurThread extends Thread{
 
-	private Serveur serveur;
+	private Casino casino;
 	private Socket connection;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message;
 
-	ServeurThread(Serveur serveur, Socket socketClient){
-		this.serveur = serveur;
+	ServeurThread(Casino casino, Socket socketClient){
+		this.casino = casino;
 		this.connection = socketClient;
 		this.out = null;
 		this.in = null;
@@ -48,18 +48,18 @@ public class ServeurThread extends Thread{
 					break;
 				case "Paul":
 					System.out.println("AJOUT DE PAUL");
-					serveur.ajoutClient(out, message);
+					casino.ajoutClient(out, message);
 					break;
 				case "Pierre":
-					serveur.ajoutClient(out, message);
+					casino.ajoutClient(out, message);
 					System.out.println("AJOUT DE PIERRE");
 					break;
 				case "BIBI":
-					serveur.ajoutClient(out, message);
+					casino.ajoutClient(out, message);
 					System.out.println("AJOUT DE BIBI");
 					break;
 				case "TITOUANT":
-					serveur.ajoutClient(out, message);
+					casino.ajoutClient(out, message);
 					System.out.println("AJOUT DE TITOUANT");
 					break;
 				default :
@@ -95,19 +95,23 @@ public class ServeurThread extends Thread{
 	private void creationJoueur() throws Exception {
 		envoiMessage("new");
 		message = attenteMessage();
-		while( serveur.getListeJoueurs().containsKey(message) || message.equals("q")) {
+		while( casino.getListeJoueurs().containsKey(message) || message.equals("q")) {
 			envoiMessage("pseudoDejaExistant");
 			message = attenteMessage();
 		}
 		if ( !message.equals("q") ) {
-			serveur.ajoutClient(out, message);
+			casino.ajoutClient(out, message);
 			envoiMessage("valide");
 		}
 	}
 
 	private void choisirTable() {
 		envoiMessage("choixTable");
-		
+		String msg = "";
+		for ( int i = 0; i <= casino.getListeTable().size(); i++ ) {
+			msg += casino.getListeTable().get(i).toString() + "\n";
+		}
+		envoiMessage(msg);
 	}
 	
 	/**
