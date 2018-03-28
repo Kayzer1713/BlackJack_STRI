@@ -70,5 +70,4 @@ public class Table {
 	public int nbJoueur() {
 		return this.listeJoueursTable.size()-1;
 	}
-	
 }

@@ -138,9 +138,15 @@ public class Client{
 		sc.close();
 	}
 
+	/**
+	 * Méthode du choix de la table
+	 */
 	private void choisirTable() {
-		System.out.println("Veuillez choisir une table du casino");
-		// to do
+		Scanner sc = new Scanner(System.in);
+		message = attenteMessage();
+		System.out.println("Veuillez choisir une table du casino : ");
+		String str = sc.nextLine();
+		envoiMessage(str);
 	}
 	
 	private String afficheTable() {
