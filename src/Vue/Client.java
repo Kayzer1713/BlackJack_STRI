@@ -156,6 +156,8 @@ public class Client{
 		Scanner sc = new Scanner(System.in);
 		String str = sc.nextLine();
 		envoiMessage(str);
+		if(attenteMessage().equals("valide"))
+			System.out.println(message);
 		envoiMessage("STOP");
 	}
 	
