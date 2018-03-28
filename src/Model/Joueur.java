@@ -6,6 +6,11 @@ import java.util.ArrayList;
 public class Joueur {
 
 	/**
+	 * 	
+	 */
+	private boolean dealer;
+
+	/**
 	 * Liste des cartes en main du joueur
 	 */
 	private ArrayList<Carte> main;
@@ -19,20 +24,26 @@ public class Joueur {
 	 * pseudo/nom du joueur
 	 */
 	private String nom;
-	
+
 	/**
 	 * Nombre de jetons du joueurs, 100 par défaut.
 	 */
 	private int jetons;
+	
+	private Table t; 
+	
+	private ObjectOutputStream out;
+
+	public Joueur(String pseudo) {
+		this.nom = pseudo;
+		this.dealer = true;
+	}
 
 	/**
 	 * Constructeur défault
 	 * @param nom du joueur
 	 */
-
-	private ObjectOutputStream out;
-
-	public Joueur(String pseudo, ObjectOutputStream out2) {
+	public Joueur(String pseudo, ObjectOutputStream out) {
 		this.nom = pseudo;
 		this.setOutJoueur(out);
 		this.jetons = 100;
@@ -51,6 +62,14 @@ public class Joueur {
 	public void setNom(String nom) 
 	{
 		this.nom = nom;
+	}
+
+	public Table getT() {
+		return t;
+	}
+
+	public void setT(Table t) {
+		this.t = t;
 	}
 
 	public ObjectOutputStream getOutJoueur() {
@@ -115,19 +134,23 @@ public class Joueur {
 	public void afficheMain() {
 		System.out.println(main);
 	}
-	
+
 	/**
 	 * Gain des jetons du joueur
 	 */
 	public void ajoutJetons(int mise){
 		this.jetons = this.jetons + mise;
 	}
-	
+
 	/**
 	 * Perte des jetons du joueur
 	 */
 	public void retireJetons(int mise){
 		this.jetons = this.jetons - mise;
+	}
+
+	public boolean isDealer() {
+		return this.dealer;
 	}
 
 }
