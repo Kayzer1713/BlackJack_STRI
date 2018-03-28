@@ -158,8 +158,57 @@ public class Client{
 		//Envoi du choix de la table
 		String str = sc.nextLine();
 		envoiMessage(str);
-		if(attenteMessage().equals("valide"))
-		System.out.println("vous avez bien rejoins la table " + str);
+		message = attenteMessage();
+		
+		while (message.equals("errNum")) {
+			System.out.println("Veuillez saisir un numéro de table valide!");
+			str = sc.nextLine();
+			envoiMessage(str);
+			message = attenteMessage();
+		}
+		message = attenteMessage();
+		
+		if(message.equals("valide")) {
+			System.out.println("vous avez bien rejoins la table " + str);	
+		}else {
+			message = attenteMessage();
+			if (message.equals("miseTable")) {
+				System.out.println("Veuillez saisir une mise min pour votre table:");
+				str = sc.nextLine();
+				envoiMessage(str);
+				message = attenteMessage();
+				
+				while (message.equals("miseIncorrecte")) {
+					System.out.println("Veuillez entrer une mise min dans vos moyens et supérieure à 0!");
+					str = sc.nextLine();
+					envoiMessage(str);
+					message = attenteMessage();
+				}
+				
+				if (message.equals("nbJoueurMax")) {
+					System.out.println("Veuillez saisir le nombre de joueur max pour la table:");
+					str = sc.nextLine();
+					envoiMessage(str);
+					message = attenteMessage();
+					
+					while (message.equals("nbJoueurIncorrecte")) {
+						System.out.println("Veuillez entrer un nombre de joueur supérieure à 2 (Dealer + vous)!");
+						str = sc.nextLine();
+						envoiMessage(str);
+						message = attenteMessage();
+					}
+
+					// la table est validée:
+					System.out.println("La table crée avec succès:");
+					System.out.println(attenteMessage());
+					if(attenteMessage().equals("valide")) {
+						System.out.println("Vous avez rejoins avec succès votre table.");
+					}
+				}
+			} else {
+				envoiMessage("STOP");
+			}
+		}
 		envoiMessage("STOP");
 		sc.close();
 	}

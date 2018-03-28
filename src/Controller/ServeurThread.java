@@ -4,8 +4,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import org.omg.CORBA.Environment;
-
 import Model.Joueur;
 import Model.Table;
 public class ServeurThread extends Thread{
@@ -116,29 +114,40 @@ public class ServeurThread extends Thread{
 		try {
 			envoiMessage("choixTable");
 			// on envoit l'affichage complet des tables
-			message = casino.afficheTables() + "\n" + (casino.nbTable()+1) + ": Temporaire: Nouvelle table"; 
+			message = casino.afficheTables() + "\t" + casino.nbTable() + ": Temporaire: Nouvelle table"; 
 			envoiMessage(message);
 			int numTable = Integer.valueOf(attenteMessage());
 			
-			while ( numTable < 0 && numTable > casino.nbTable()+1 ) {
-				envoiMessage("Veuillez saisir un numéro valide entre 0 et " + casino.nbTable()+1);
+			while ( numTable < 0 || numTable > casino.nbTable() ) {
+				envoiMessage("errNum");
 				numTable = Integer.valueOf(attenteMessage());
 			}
-			if (numTable == casino.nbTable()+1) {
+			envoiMessage("numOK");
+			// si table temporaire
+			if (numTable == casino.nbTable()) {
 				// choix des pamètres:
 				envoiMessage("miseTable");
 				int miseTable = Integer.valueOf(attenteMessage());
+				
+				while (miseTable < 0 || miseTable > casino.getListeJoueurs().get(pseudo).getJeton()) {
+					envoiMessage("miseIncorrecte");
+					miseTable = Integer.valueOf(attenteMessage());
+				}
+				
 				envoiMessage("nbJoueurMax");
 				int nbJoueurMax = Integer.valueOf(attenteMessage());
-				
+				while ( nbJoueurMax < 2 ) {
+					envoiMessage("nbJoueurIncorrecte");
+					nbJoueurMax = Integer.valueOf(attenteMessage());
+				}
 				casino.ajoutTable(new Table(casino, new Joueur(casino.nameDealer[casino.indexDealerUse]), miseTable, false, nbJoueurMax));
+				casino.getListeTable().get(numTable).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));
 				envoiMessage(casino.afficheTables());
-				
-			} else {
-				casino.getListeTable().get(numTable).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));	
-			}
+				System.out.println("création de la table");
+			}else {
+			casino.getListeTable().get(numTable).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));
 			envoiMessage("valide");
-			
+			}
 		} catch (Exception e) {e.printStackTrace();}
 	}
 
@@ -169,6 +178,7 @@ public class ServeurThread extends Thread{
 		} while( ( System.currentTimeMillis()-tempsActuel < timeout ) && reçu.equals("") );
 		if ( reçu == null )
 			throw new Exception("Timeout: le message n'as pas était reçus à temps ou le client ne répond plus...");
+		System.out.println("Reçus:"+reçu);
 		return reçu;
 	}
 }

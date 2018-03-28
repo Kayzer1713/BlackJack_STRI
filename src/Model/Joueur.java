@@ -153,4 +153,8 @@ public class Joueur {
 		return this.dealer;
 	}
 
+	public int getJeton() {
+		return jetons;
+	}
+
 }
