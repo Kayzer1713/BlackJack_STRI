@@ -50,6 +50,10 @@ public class Client{
 				case "again":
 					System.out.println("Reçu>nouv partie");
 					break;
+				case "choixTable":
+					System.out.println("Reçu>choix table");
+					choisirTable();
+					break;
 				default :
 					System.out.println("Reçu>Message inconnu! :"+message);
 				}
@@ -76,7 +80,7 @@ public class Client{
 	}
 
 	/**
-	 * 
+	 * Méthode envoie message
 	 * @param msg
 	 */
 	private void envoiMessage(String msg)
@@ -138,6 +142,24 @@ public class Client{
 		return "not implemented yet";
 	}
 
+	/**
+	 * Méthode du choix de la table
+	 */
+	private void choisirTable() {
+		
+		//Affichage des tables
+		message = attenteMessage();
+		System.out.println("Voici la liste des tables : " + message);
+		System.out.println("Veuillez selectionner une table.");
+		
+		//Envoi du choix de la table
+		Scanner sc = new Scanner(System.in);
+		String str = sc.nextLine();
+		envoiMessage(str);
+		envoiMessage("STOP");
+	}
+	
+	
 	public static void main(String args[]) {
 		Client client = new Client();		
 		client.run();
