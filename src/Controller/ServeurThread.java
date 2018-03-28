@@ -5,6 +5,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.omg.CORBA.Environment;
+
+import Model.Joueur;
+import Model.Table;
 public class ServeurThread extends Thread{
 
 	private Casino casino;
@@ -113,11 +116,29 @@ public class ServeurThread extends Thread{
 		try {
 			envoiMessage("choixTable");
 			// on envoit l'affichage complet des tables
-			envoiMessage(casino.afficheTables());
-			message = attenteMessage();
-			casino.getListeTable().get(Integer.valueOf(message)).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));
+			message = casino.afficheTables() + "\n" + (casino.nbTable()+1) + ": Temporaire: Nouvelle table"; 
+			envoiMessage(message);
+			int numTable = Integer.valueOf(attenteMessage());
 			
+			while ( numTable < 0 && numTable > casino.nbTable()+1 ) {
+				envoiMessage("Veuillez saisir un numéro valide entre 0 et " + casino.nbTable()+1);
+				numTable = Integer.valueOf(attenteMessage());
+			}
+			if (numTable == casino.nbTable()+1) {
+				// choix des pamètres:
+				envoiMessage("miseTable");
+				int miseTable = Integer.valueOf(attenteMessage());
+				envoiMessage("nbJoueurMax");
+				int nbJoueurMax = Integer.valueOf(attenteMessage());
+				
+				casino.ajoutTable(new Table(casino, new Joueur(casino.nameDealer[casino.indexDealerUse]), miseTable, false, nbJoueurMax));
+				envoiMessage(casino.afficheTables());
+				
+			} else {
+				casino.getListeTable().get(numTable).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));	
+			}
 			envoiMessage("valide");
+			
 		} catch (Exception e) {e.printStackTrace();}
 	}
 

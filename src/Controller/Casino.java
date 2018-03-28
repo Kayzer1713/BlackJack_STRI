@@ -20,7 +20,7 @@ public class Casino {
 	/**
 	 * Liste de nom pour instancier des dealers
 	 */
-	private String[] nameDealer = {"Charles de Gaulle",
+	String[] nameDealer = {"Charles de Gaulle",
 			"Louis Pasteur",
 			"Coluche",
 			"Molière",
@@ -59,7 +59,7 @@ public class Casino {
 	/**
 	 * Sauvegarde de l'index de navigation au sein de la liste des dealer afin de ne pas affecter un même dealer à une nouvelle table
 	 */
-	private int indexDealerUse;	
+	int indexDealerUse;	
 	/**
 	 * Constructeur : 
 	 * Instanciation de la liste de dealer via la liste de prénom.
@@ -88,9 +88,9 @@ public class Casino {
 	 * False = Table dynamique
 	 * @param tablePerm
 	 */
-	public void addTable(boolean tablePerm) {
+	public void ajoutTable(Table t) {
 		indexDealerUse++;
-		tablePerm = this.tablePerm;
+		listTable.add(t);
 		listTable.add(new Table(this, listDealer.get(indexDealerUse),mise[1],tablePerm,nbjoueursTable));
 	}
 	/**
@@ -152,7 +152,11 @@ public class Casino {
 			}
 		}
 	}
-
+	
+	public int nbTable() {
+		return this.listTable.size();
+	}
+	
 	public int getNbClients() {
 		return nbClients;
 	}
