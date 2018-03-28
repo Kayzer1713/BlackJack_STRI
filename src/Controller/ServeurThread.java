@@ -102,7 +102,7 @@ public class ServeurThread extends Thread{
 			envoiMessage("pseudoDejaExistant");
 			message = attenteMessage();
 		}
-		if ( !message.equals("q") ) {
+		if ( (!message.equals("q")) || (!message.equals("STOP")) ) {
 			pseudo = message;
 			casino.ajoutClient(out, pseudo);
 			envoiMessage("valide");
@@ -111,12 +111,12 @@ public class ServeurThread extends Thread{
 
 	private void choisirTable() {
 		try {
-
 			envoiMessage("choixTable");
 			// on envoit l'affichage complet des tables
 			envoiMessage(casino.afficheTables());
 			message = attenteMessage();
 			casino.getListeTable().get(Integer.valueOf(message)).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));
+			
 			envoiMessage("valide");
 		} catch (Exception e) {e.printStackTrace();}
 	}

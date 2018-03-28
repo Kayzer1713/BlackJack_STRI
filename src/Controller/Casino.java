@@ -162,11 +162,11 @@ public class Casino {
 	}
 
 	public String afficheTables() {
-		String msg = "-------------------------------\n\t";
+		String msg = "\n-------------------------------\n";
 		for ( int i = 0; i < listTable.size(); i++ ) {
 			msg += "\t" + i + ": " +listTable.get(i).toString() + "\n";
 		}
-		msg += "-------------------------------\n";
+		msg += "\t-------------------------------\n";
 		return msg;
 	}
 

@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -61,6 +63,7 @@ public class Table extends Thread{
 			this.listeJoueursTable.put(pseudo, j);
 		} else {
 			System.out.println("Nombre de joueurs max atteint.");
+			envoiMessage("maxTable", j.getOutJoueur());
 		}
 	}
 
@@ -118,9 +121,19 @@ public class Table extends Thread{
 			if (jCourant.isDealer() == true)
 				distribuer(jCourant);
 			distribuer(jCourant);
-			
 		}
-		
+	}
+	
+	private void envoiMessage(String msg, ObjectOutputStream out)
+	{
+		try{
+			out.writeObject(msg);
+			out.flush();
+			System.out.println("Envoi>" + msg);
+		}
+		catch(IOException ioException){
+			ioException.printStackTrace();
+		}
 	}
 }
 
