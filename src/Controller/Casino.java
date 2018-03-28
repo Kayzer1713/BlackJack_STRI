@@ -1,6 +1,9 @@
-package Model;
+package Controller;
 
 import java.util.ArrayList;
+
+import Model.Joueur;
+import Model.Table;
 /**
  * Model Casino
  * @category Model
@@ -37,22 +40,25 @@ public class Casino {
 	/**
 	 * Sauvegarde de l'index de navigation au sein de la liste des dealer afin de ne pas affecter un même dealer à une nouvelle table
 	 */
-	private int indexDealerUse;
-	
+	private int indexDealerUse;	
 	/**
 	 * Constructeur : 
 	 * Instanciation de la liste de dealer via la liste de prénom.
 	 * Instanciation de la liste de table
 	 */
+	
 	public Casino(){	
+		// boucle de création des dealers
 		for(int j=0; j<=10;j++) {
-			listDealer.add(new Joueur(nameDealer[j],null));
+			listDealer.add(new Joueur(nameDealer[j]));
 		}
+		// boucle de création des tables
 		for(int i=0; i<=3; i++) {		
 			indexDealerUse = i +indexDealerUse;
 			listTable.add(new Table(listDealer.get(i),mise[i],true,nbjoueursTable));
 		}	
 	}
+	
 	/**
 	 * Méthode d'ajout de table avec en paramètre un boolean qui définit le type de la table:
 	 * True = Table permanente

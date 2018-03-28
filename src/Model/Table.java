@@ -3,7 +3,7 @@ package Model;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class Table {
+public class Table extends Thread{
 
 	/**
 	 * Map contenant la liste des joueurs de la table
@@ -29,18 +29,20 @@ public class Table {
 	/**
 	 * Nombre de joueurs sur la table
 	 */
-	private int nombreJoueurs;
+	private int nbJoueurMax;
 	
 	/**
 	 * Constructeur table
 	 * @param dealer
 	 */
-	public Table(Joueur dealer, int miseTable, boolean tablePermanente, int nombreJoueurs) {
+	public Table(Joueur dealer, int miseTable, boolean tablePermanente, int nbJoueurMax) {
+		this.listeJoueursTable = new HashMap<String, Joueur>();
 		ajoutJoueur(dealer.getNom(), dealer);
 		this.paquet = new Deck();
 		this.paquet.reset();
 		this.miseTable = miseTable;
 		this.tablePermanente = tablePermanente;
+		this.nbJoueurMax = nbJoueurMax;
 		
 	}
 
@@ -52,7 +54,7 @@ public class Table {
 	 * @see Socket
 	 */
 	public void ajoutJoueur(String pseudo, Joueur j) {
-		if(listeJoueursTable.size()-1 <= nombreJoueurs){
+		if(listeJoueursTable.size()-1 <= nbJoueurMax){
 			this.listeJoueursTable.put(pseudo, j);
 		} else {
 			System.out.println("Nombre de joueurs max atteint.");
@@ -66,9 +68,30 @@ public class Table {
 	public void retireJoueur(String pseudo) {
 		this.listeJoueursTable.remove(pseudo);
 	}
+
+	public void distribuer(Joueur j) {
+
+	}
 	
+	/**
+	 * Donne une carte au joueur en mettant à jour le status de la table chez tout les clients
+	 */
+	public void majCarte() {
+		// met a jour les informations chez tout les clients qu'il y a eu un changement
+	}
 	public int nbJoueur() {
 		return this.listeJoueursTable.size()-1;
+	}
+	
+	@Override
+	public String toString() {
+		String description = "";
+		if ( this.tablePermanente )
+			description += "Permanante: ";
+		else
+			description += "Temporaire: ";
+		description += "Nb Joueurs: " + (listeJoueursTable.size()-1) + "/" + nbJoueurMax;
+		return description;
 	}
 	
 }
