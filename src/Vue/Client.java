@@ -39,14 +39,15 @@ public class Client{
 				case "new":
 					System.out.println("Bienvenue dans le casino !");
 					premiereConnection();
-					envoiMessage("STOP");
+					//envoiMessage("STOP");
 					break;
 				case "majTable":
 					System.out.println("Reçu>maj Table");
 					afficheTable();
 					break;
-				case "hit":
-					System.out.println("Reçu>tire carte");
+				case "partie":
+					// a verifier avec ghis
+					deroulementPartie();
 					break;
 				case "again":
 					System.out.println("Reçu>nouv partie");
@@ -144,7 +145,7 @@ public class Client{
 	private void choisirTable() {
 		Scanner sc = new Scanner(System.in);
 		message = attenteMessage();
-		System.out.println("Veuillez choisir une table du casino : ");
+		System.out.println("Veuillez choisir une table du Casino : ");
 		String str = sc.nextLine();
 		envoiMessage(str);
 	}
@@ -154,6 +155,35 @@ public class Client{
 		return "not implemented yet";
 	}
 
+	private void deroulementPartie(){
+		
+		//récupération du message
+		String messagePartie = null;
+		try {
+			messagePartie = (String)in.readObject();
+			System.out.println("Reçu>" + messagePartie);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//gestion du message
+		do{
+			switch(messagePartie) {
+			case "hit":
+				System.out.println("Reçu>tire carte");
+				//envoiMessage("");
+				break;
+			case "stand":
+				System.out.println("Reçu>Vous avez décidé de garder votre jeu");
+				//messagePartie = "STOP";
+				envoiMessage("STOP");
+				break;
+			}
+		}while(!messagePartie.equals("STOP"));
+	}
+	
 	public static void main(String args[])
 	{
 
