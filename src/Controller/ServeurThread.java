@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import org.omg.CORBA.Environment;
 public class ServeurThread extends Thread{
 
 	private Casino casino;
@@ -10,6 +12,7 @@ public class ServeurThread extends Thread{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message;
+	private String pseudo;
 
 	ServeurThread(Casino casino, Socket socketClient){
 		this.casino = casino;
@@ -36,7 +39,7 @@ public class ServeurThread extends Thread{
 			creationJoueur();
 			// Init partie
 			choisirTable();
-			
+
 			// Boucle principale de jeux
 			do{
 				message = attenteMessage();
@@ -100,17 +103,24 @@ public class ServeurThread extends Thread{
 			message = attenteMessage();
 		}
 		if ( !message.equals("q") ) {
-			casino.ajoutClient(out, message);
+			pseudo = message;
+			casino.ajoutClient(out, pseudo);
 			envoiMessage("valide");
 		}
 	}
 
 	private void choisirTable() {
-		envoiMessage("Bienvenue dans le casino !");
-		//bjr
-		envoiMessage("choixTable");
+		try {
+
+			envoiMessage("choixTable");
+			// on envoit l'affichage complet des tables
+			envoiMessage(casino.afficheTables());
+			message = attenteMessage();
+			casino.getListeTable().get(Integer.valueOf(message)).ajoutJoueur(pseudo, casino.getListeJoueurs().get(pseudo));
+			envoiMessage("valide");
+		} catch (Exception e) {e.printStackTrace();}
 	}
-	
+
 	/**
 	 * 
 	 * @param msg
