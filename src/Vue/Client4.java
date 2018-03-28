@@ -25,39 +25,33 @@ public class Client4{
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
-
+			
 			try {
 				message = (String)in.readObject();
 				System.out.println("Reçu>" + message);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
 			// Boucle principale de communication
 			do{
-				try{
-					message = (String)in.readObject();
-					switch(message) {
-					case "new":
-						premiereConnection();
-						envoiMessage("STOP");
-						break;
-					case "majTable":
-						System.out.println("Reçu>maj Table");
-						afficheTable();
-						break;
-					case "hit":
-						System.out.println("Reçu>tire carte");
-						break;
-					case "again":
-						System.out.println("Reçu>nouv partie");
-						break;
-					default :
-						System.out.println("Reçu>"+message);                    	
-					}
-				}
-				catch(ClassNotFoundException classNot){
-					System.err.println("Format de données inconnue!");
+				message = attenteMessage();
+				switch(message) {
+				case "new":
+					premiereConnection();
+					envoiMessage("STOP");
+					break;
+				case "majTable":
+					System.out.println("Reçu>maj Table");
+					afficheTable();
+					break;
+				case "hit":
+					System.out.println("Reçu>tire carte");
+					break;
+				case "again":
+					System.out.println("Reçu>nouv partie");
+					break;
+				default :
+					System.out.println("Reçu>Message inconnu! :"+message);
 				}
 			}while(!message.equals("STOP"));
 			System.out.println(message + ": OK");
@@ -144,10 +138,8 @@ public class Client4{
 		return "not implemented yet";
 	}
 
-	public static void main(String args[])
-	{
-
-		Client client = new Client();		
+	public static void main(String args[]) {
+		Client4 client = new Client4();		
 		client.run();
 	}
 }

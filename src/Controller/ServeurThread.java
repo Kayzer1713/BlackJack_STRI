@@ -31,7 +31,6 @@ public class ServeurThread extends Thread{
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(connection.getInputStream());
-			envoiMessage("Connexion réussi");
 
 			// Init nouv joueur
 			creationJoueur();
@@ -93,6 +92,7 @@ public class ServeurThread extends Thread{
 	}
 
 	private void creationJoueur() throws Exception {
+		envoiMessage("Connexion réussi");
 		envoiMessage("new");
 		message = attenteMessage();
 		while( casino.getListeJoueurs().containsKey(message) || message.equals("q")) {
