@@ -134,17 +134,17 @@ public class Casino {
 	}
 
 	//** Methode : envoie le message à tous les clients **
-	synchronized public void envoieTous(String message,String sLast)
+	/*synchronized public void envoiTous(ArrayList<Joueur> listeJ, String message)
 	{
-		Set<String> cles = listeJoueurs.keySet();
+		Set<String> cles = listeJ.keySet();
 		Iterator<String> it = cles.iterator();
 		while (it.hasNext()){
 			String cle = it.next();
-			Joueur j = listeJoueurs.get(cle); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
+			Joueur j = listeJ.get(cle); // extraction de l'élément courant (type PrintWriter)			if (out != null) // sécurité, l'élément ne doit pas être vide
 			{
 				// ecriture du texte passé en paramètre (et concaténation d'une string de fin de chaine si besoin)
 				try {
-					j.getOutJoueur().writeObject(message+sLast);
+					j.getOutJoueur().writeObject(message);
 					j.getOutJoueur().flush(); // envoi dans le flux de sortie
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -152,6 +152,7 @@ public class Casino {
 			}
 		}
 	}
+	*/
 	
 	public int nbTable() {
 		return this.listTable.size();

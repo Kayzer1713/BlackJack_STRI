@@ -37,6 +37,8 @@ public class Table extends Thread{
 	 */
 	private int nbJoueurMax;
 
+	private Casino casino;
+	
 	/**
 	 * Constructeur table
 	 * @param dealer
@@ -49,6 +51,7 @@ public class Table extends Thread{
 		this.miseTable = miseTable;
 		this.tablePermanente = tablePermanente;
 		this.nbJoueurMax = nbJoueurMax;
+		this.casino = casino;
 	}
 
 	/**
@@ -77,6 +80,7 @@ public class Table extends Thread{
 
 	public void distribuer(Joueur j) {
 		j.ajoutCarte(this.paquet.prendreCarte());
+		//casino.envoiTous();
 	}
 
 	/**
@@ -101,29 +105,43 @@ public class Table extends Thread{
 	}
 
 	public void run() {
-		// parcour de la liste des joueurs:
-		Joueur jCourant;
-		
-		Set<String> cles = listeJoueursTable.keySet();
-		Iterator<String> it = cles.iterator();
-		
-		// distribution premier tour
-		while (it.hasNext()){
-			String cle = it.next();
-			jCourant = listeJoueursTable.get(cle);
-			distribuer(jCourant);
-		}
-		
-		// distribution deuxième tour
-		while (it.hasNext()){
-			String cle = it.next();
-			jCourant = listeJoueursTable.get(cle);
-			if (jCourant.isDealer() == true)
+
+		// condition de lancement de la partie:
+		if (listeJoueursTable.size()>2) {
+			// attente de début de partie:
+			System.out.println("La partie va commencer dans 5s");
+			long timeout = 5000;
+			long tempsActuel = System.currentTimeMillis();
+			do {
+				
+			} while( ( System.currentTimeMillis()-tempsActuel < timeout ) );
+			
+			// demande de mises:
+			
+			// parcour de la liste des joueurs:
+			Joueur jCourant;
+
+			Set<String> cles = listeJoueursTable.keySet();
+			Iterator<String> it = cles.iterator();
+
+			// distribution premier tour
+			while (it.hasNext()){
+				String cle = it.next();
+				jCourant = listeJoueursTable.get(cle);
 				distribuer(jCourant);
-			distribuer(jCourant);
+			}
+
+			// distribution deuxième tour
+			while (it.hasNext()){
+				String cle = it.next();
+				jCourant = listeJoueursTable.get(cle);
+				if (jCourant.isDealer() == true)
+					distribuer(jCourant);
+				distribuer(jCourant);
+			}
 		}
 	}
-	
+
 	private void envoiMessage(String msg, ObjectOutputStream out)
 	{
 		try{
