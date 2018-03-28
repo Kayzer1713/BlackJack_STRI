@@ -25,19 +25,18 @@ public class Client3{
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
-
+			
 			try {
 				message = (String)in.readObject();
 				System.out.println("Reçu>" + message);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
 			// Boucle principale de communication
 			do{
+				message = attenteMessage();
 				switch(message) {
 				case "new":
-					System.out.println("Bienvenue dans le casino !");
 					premiereConnection();
 					envoiMessage("STOP");
 					break;
@@ -52,7 +51,7 @@ public class Client3{
 					System.out.println("Reçu>nouv partie");
 					break;
 				default :
-					System.out.println("Reçu>"+message);                    	
+					System.out.println("Reçu>Message inconnu! :"+message);
 				}
 			}while(!message.equals("STOP"));
 			System.out.println(message + ": OK");
@@ -93,7 +92,7 @@ public class Client3{
 	}
 
 	private String attenteMessage() {
-		System.out.println("Attente de réponse du serveur...");
+		System.out.println("Attente de réponse du client...");
 		String reçu = null;
 		long timeout = 5000;
 		long tempsActuel = System.currentTimeMillis();
@@ -118,14 +117,13 @@ public class Client3{
 		System.out.println("Vous avez saisi : " + str);
 		envoiMessage(str);
 		message = attenteMessage();
-		
 		while ( message.equals("pseudoDejaExistant") ) {
 			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
+			message = attenteMessage();
 			str = sc.nextLine();
 			envoiMessage(str);
-			message = attenteMessage();
 		}
-		
+		message = attenteMessage();
 		if (message.equals("valide")) {
 			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
 			this.pseudo = str;
@@ -134,16 +132,14 @@ public class Client3{
 		}
 		sc.close();
 	}
-	
+
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";
 	}
 
-	public static void main(String args[])
-	{
-
-		Client client = new Client();		
+	public static void main(String args[]) {
+		Client3 client = new Client3();		
 		client.run();
 	}
 }

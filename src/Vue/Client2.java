@@ -25,39 +25,33 @@ public class Client2{
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
-
+			
 			try {
 				message = (String)in.readObject();
 				System.out.println("Reçu>" + message);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
 			// Boucle principale de communication
 			do{
-				try{
-					message = (String)in.readObject();
-					switch(message) {
-					case "new":
-						premiereConnection();
-						envoiMessage("STOP");
-						break;
-					case "majTable":
-						System.out.println("Reçu>maj Table");
-						afficheTable();
-						break;
-					case "hit":
-						System.out.println("Reçu>tire carte");
-						break;
-					case "again":
-						System.out.println("Reçu>nouv partie");
-						break;
-					default :
-						System.out.println("Reçu>"+message);                    	
-					}
-				}
-				catch(ClassNotFoundException classNot){
-					System.err.println("Format de données inconnue!");
+				message = attenteMessage();
+				switch(message) {
+				case "new":
+					premiereConnection();
+					envoiMessage("STOP");
+					break;
+				case "majTable":
+					System.out.println("Reçu>maj Table");
+					afficheTable();
+					break;
+				case "hit":
+					System.out.println("Reçu>tire carte");
+					break;
+				case "again":
+					System.out.println("Reçu>nouv partie");
+					break;
+				default :
+					System.out.println("Reçu>Message inconnu! :"+message);
 				}
 			}while(!message.equals("STOP"));
 			System.out.println(message + ": OK");
@@ -98,7 +92,7 @@ public class Client2{
 	}
 
 	private String attenteMessage() {
-		System.out.println("Attente de réponse du serveur...");
+		System.out.println("Attente de réponse du client...");
 		String reçu = null;
 		long timeout = 5000;
 		long tempsActuel = System.currentTimeMillis();
@@ -121,17 +115,15 @@ public class Client2{
 		System.out.println("Bonjour veuillez saisir un pseudo :");
 		String str = sc.nextLine();
 		System.out.println("Vous avez saisi : " + str);
-		
 		envoiMessage(str);
 		message = attenteMessage();
-		
 		while ( message.equals("pseudoDejaExistant") ) {
 			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
 			str = sc.nextLine();
 			envoiMessage(str);
 			message = attenteMessage();
 		}
-		
+		message = attenteMessage();
 		if (message.equals("valide")) {
 			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
 			this.pseudo = str;
@@ -146,10 +138,8 @@ public class Client2{
 		return "not implemented yet";
 	}
 
-	public static void main(String args[])
-	{
-
-		Client client = new Client();		
+	public static void main(String args[]) {
+		Client2 client = new Client2();		
 		client.run();
 	}
 }
