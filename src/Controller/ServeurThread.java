@@ -106,12 +106,9 @@ public class ServeurThread extends Thread{
 	}
 
 	private void choisirTable() {
+		envoiMessage("Bienvenue dans le casino !");
+		//bjr
 		envoiMessage("choixTable");
-		String msg = "";
-		for ( int i = 0; i <= casino.getListeTable().size(); i++ ) {
-			msg += casino.getListeTable().get(i).toString() + "\n";
-		}
-		envoiMessage(msg);
 	}
 	
 	/**

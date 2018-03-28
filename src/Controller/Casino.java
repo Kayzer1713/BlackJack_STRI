@@ -68,9 +68,11 @@ public class Casino {
 
 	public Casino(){	
 		this.nbClients=0;
+		this.listTable = new ArrayList<Table>();
+		this.listDealer = new ArrayList<Joueur>();
 		this.listeJoueurs = new HashMap<String, Joueur>();
 		// boucle de création des dealers
-		for(int j=0; j<=10;j++) {
+		for( int j = 0; j < 10; j++ ) {
 			listDealer.add(new Joueur(nameDealer[j]));
 		}
 		// boucle de création des tables
@@ -104,7 +106,7 @@ public class Casino {
 	public void setListeJoueurs(HashMap<String, Joueur> listeJoueurs) {
 		this.listeJoueurs = listeJoueurs;
 	}
-	
+
 	/**
 	 * @return 
 	 * 
@@ -183,7 +185,7 @@ public class Casino {
 			System.out.println(casino.getNbClients());
 		}
 	}
-	
+
 }
 
 

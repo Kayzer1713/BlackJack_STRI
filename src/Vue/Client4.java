@@ -2,33 +2,19 @@ package Vue;
 
 import java.io.*;
 import java.net.*;
-/**
- * Vue Client n°1
- * @category VueClient
- */
+import java.util.Scanner;
+
 public class Client4{
-	/**
-	 * variable de requête socket
-	 */
-	Socket requestSocket;
-	/**
-	 * Variable de sortie du stream
-	 */
-	ObjectOutputStream out;
-	/**
-	 * Variable d'entrée du stream
-	 */
-	ObjectInputStream in;
-	/**
-	 * Variable de stockage de message
-	 */
-	String message;
+
+	private Socket requestSocket;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private String message;
+	@SuppressWarnings("unused")
+	private String pseudo;
 
 	Client4(){}
-	/**
-	 * Connection du client au serveur		
-	 * Ouverture des connections
-	 */
+
 	void run()
 	{
 		try{
@@ -39,7 +25,7 @@ public class Client4{
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			out.flush();
 			in = new ObjectInputStream(requestSocket.getInputStream());
-			
+
 			try {
 				message = (String)in.readObject();
 				System.out.println("Reçu>" + message);
@@ -53,8 +39,7 @@ public class Client4{
 					message = (String)in.readObject();
 					switch(message) {
 					case "new":
-						System.out.println("reçu>nouv joueur");
-						envoiMessage("BIBI");
+						premiereConnection();
 						envoiMessage("STOP");
 						break;
 					case "majTable":
@@ -96,9 +81,8 @@ public class Client4{
 		}
 	}
 
-
 	/**
-	 * Méthode qui permet d'envoyer un message
+	 * 
 	 * @param msg
 	 */
 	private void envoiMessage(String msg)
@@ -112,10 +96,49 @@ public class Client4{
 			ioException.printStackTrace();
 		}
 	}
-	/**
-	 * Retourne le statut mis à jour de la table
-	 * @return 
-	 */
+
+	private String attenteMessage() {
+		System.out.println("Attente de réponse du client...");
+		String reçu = null;
+		long timeout = 5000;
+		long tempsActuel = System.currentTimeMillis();
+		try {
+			do {
+				reçu = (String)in.readObject();
+			}	while( ( System.currentTimeMillis()-tempsActuel < timeout ) && reçu.equals("") );
+			if ( reçu == null )
+				throw new Exception("Timeout: le message n'as pas était reçus à temps ou le client ne répond plus...");
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reçu;
+	}
+
+	private void premiereConnection() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Bonjour veuillez saisir un pseudo :");
+		String str = sc.nextLine();
+		System.out.println("Vous avez saisi : " + str);
+		envoiMessage(str);
+		message = attenteMessage();
+		while ( message.equals("pseudoDejaExistant") ) {
+			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
+			message = attenteMessage();
+			str = sc.nextLine();
+			envoiMessage(str);
+		}
+		message = attenteMessage();
+		if (message.equals("valide")) {
+			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
+			this.pseudo = str;
+		} else {
+			envoiMessage("STOP");
+		}
+		sc.close();
+	}
+
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";
@@ -123,7 +146,8 @@ public class Client4{
 
 	public static void main(String args[])
 	{
-		Client4 client = new Client4();
+
+		Client client = new Client();		
 		client.run();
 	}
 }

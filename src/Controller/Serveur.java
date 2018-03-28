@@ -15,12 +15,12 @@ public class Serveur {
 	private HashMap<String, Joueur> listeJoueurs;
 
 	private int nbClients;// nombre total de clients connectés
-	
+
 	public Serveur() {
 		this.setNbClients(0);
 		this.listeJoueurs = new HashMap<String, Joueur>();
 	}
-	
+
 	/**
 	 * @return the listeJoueurs
 	 */
@@ -34,7 +34,7 @@ public class Serveur {
 	public void setListeJoueurs(HashMap<String, Joueur> listeJoueurs) {
 		this.listeJoueurs = listeJoueurs;
 	}
-	
+
 	//** Methode : détruit le client 
 	synchronized public void suprClient(String pseudo)
 	{

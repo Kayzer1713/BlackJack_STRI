@@ -32,14 +32,14 @@ public class Client{
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-
+			
 			// Boucle principale de communication
 			do{
 				switch(message) {
 				case "new":
 					System.out.println("Bienvenue dans le casino !");
 					premiereConnection();
-					//envoiMessage("STOP");
+					envoiMessage("STOP");
 					break;
 				case "majTable":
 					afficheTable();
@@ -102,7 +102,7 @@ public class Client{
 		try {
 			do {
 				reçu = (String)in.readObject();
-			}	while( ( System.currentTimeMillis()-tempsActuel < timeout ) && reçu.equals("") );
+			} while( ( System.currentTimeMillis()-tempsActuel < timeout ) && reçu.equals("") );
 			if ( reçu == null )
 				throw new Exception("Timeout: le message n'as pas était reçus à temps ou le client ne répond plus...");
 		} catch (ClassNotFoundException | IOException e) {
@@ -120,14 +120,14 @@ public class Client{
 		System.out.println("Vous avez saisi : " + str);
 		envoiMessage(str);
 		message = attenteMessage();
-		
+
 		while ( message.equals("pseudoDejaExistant") ) {
 			System.out.println("Erreur: pseudo déjà existant veuillez essayer autre chose...");
 			str = sc.nextLine();
 			envoiMessage(str);
 			message = attenteMessage();
 		}
-		
+
 		if (message.equals("valide")) {
 			System.out.println("Vous êtes maintenant connecté sour le pseudo:" + str);
 			this.pseudo = str;
@@ -148,14 +148,14 @@ public class Client{
 		String str = sc.nextLine();
 		envoiMessage(str);
 	}
-	
+
 	private String afficheTable() {
 		System.out.println("affichage des tables");
 		return "not implemented yet";
 	}
 
 	private void deroulementPartie(){
-		
+
 		//récupération du message
 		String messagePartie = null;
 		try {
@@ -166,7 +166,7 @@ public class Client{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		//gestion du message
 		do{
 			switch(messagePartie) {
@@ -182,7 +182,7 @@ public class Client{
 			}
 		}while(!messagePartie.equals("STOP"));
 	}
-	
+
 	public static void main(String args[])
 	{
 
