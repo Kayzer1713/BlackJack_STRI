@@ -4,3 +4,4 @@ Thumbs.db
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 /bin/
+.class
