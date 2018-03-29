@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-public class Client{
+public class Client5{
 
 	private Socket requestSocket;
 	private ObjectOutputStream out;
@@ -14,7 +14,7 @@ public class Client{
 	private String pseudo;
 	private Scanner sc;
 
-	Client(){
+	Client5(){
 		sc = new Scanner(System.in);
 	}
 
@@ -165,7 +165,7 @@ public class Client{
 			envoiMessage(str);
 			message = attenteMessage();
 		}
-		//message = attenteMessage();
+		message = attenteMessage();
 		
 		if(message.equals("valide")) {
 			System.out.println("vous avez bien rejoins la table " + str);	
@@ -214,7 +214,7 @@ public class Client{
 	
 	
 	public static void main(String args[]) {
-		Client client = new Client();		
+		Client5 client = new Client5();		
 		client.run();
 	}
 }
